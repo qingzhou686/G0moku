@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>五子棋 · Gomoku</title>
+<meta name="description" content="在线五子棋：人机对战与双人对战，支持悔棋、落子记录与胜负高亮。" />
+<meta name="theme-color" content="#14161c" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="五子棋 · 在线对弈" />
+<meta property="og:description" content="15×15 棋盘，人机对战（三档难度）与双人对战，含悔棋、落子记录与五连高亮。" />
+<meta name="twitter:card" content="summary" />
+<!-- 发布到公网后，可在这里补上分享缩略图： <meta property="og:image" content="https://你的域名/preview.png" /> -->
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e3b877'/><circle cx='12' cy='12' r='6' fill='%23211d1a'/><circle cx='21' cy='21' r='6' fill='%23fdfaf4' stroke='%23c9bda9'/></svg>" />
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <h1>五子棋</h1>
+        <p class="brand-sub">Gomoku · 15 × 15 · 连成五子者胜</p>
+      </div>
+    </div>
+    <button id="soundBtn" class="icon-btn" type="button" aria-pressed="true" title="落子音效">
+      <span class="icon-sound-on">🔊</span><span class="icon-sound-off">🔇</span>
+      <span class="icon-btn-label">音效</span>
+    </button>
+  </header>
+
+  <main class="layout">
+    <section class="board-panel">
+      <div class="board-frame">
+        <canvas id="board" role="img" aria-label="五子棋棋盘"></canvas>
+        <div id="thinking" class="thinking" hidden>
+          <span class="spinner" aria-hidden="true"></span>思考中…
+        </div>
+        <div id="overlay" class="overlay" hidden>
+          <div class="overlay-card">
+            <p id="overlayTitle" class="overlay-title">黑棋胜</p>
+            <p id="overlayText" class="overlay-text">共 0 手</p>
+            <div class="overlay-actions">
+              <button id="overlayAgain" class="btn btn-primary" type="button">再来一局</button>
+              <button id="overlayClose" class="btn btn-ghost" type="button">看看棋盘</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="side-panel">
+      <div class="card status-card">
+        <div class="turn-row">
+          <span id="turnDot" class="turn-dot black"></span>
+          <div>
+            <p id="statusText" class="status-text">黑棋先行</p>
+            <p id="statusSub" class="status-sub">点击棋盘落子</p>
+          </div>
+        </div>
+        <div class="score-row">
+          <div class="score-item">
+            <span class="score-label"><i class="dot black"></i>黑棋</span>
+            <span id="scoreBlack" class="score-value">0</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label"><i class="dot white"></i>白棋</span>
+            <span id="scoreWhite" class="score-value">0</span>
+          </div>
+          <div class="score-item">
+            <span class="score-label">和棋</span>
+            <span id="scoreDraw" class="score-value">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">对局模式</h2>
+        <div class="segmented" role="group" aria-label="对局模式">
+          <button class="seg active" data-mode="pve" type="button">人机对战</button>
+          <button class="seg" data-mode="pvp" type="button">双人对战</button>
+        </div>
+        <div id="aiOptions" class="ai-options">
+          <label for="sideSelect">我执</label>
+          <select id="sideSelect" class="select">
+            <option value="black">黑棋（先手）</option>
+            <option value="white">白棋（后手）</option>
+          </select>
+          <label for="levelSelect">难度</label>
+          <select id="levelSelect" class="select">
+            <option value="easy">简单</option>
+            <option value="normal" selected>普通</option>
+            <option value="hard">困难</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">操作</h2>
+        <div class="actions">
+          <button id="undoBtn" class="btn btn-ghost" type="button">悔棋</button>
+          <button id="restartBtn" class="btn btn-primary" type="button">重新开始</button>
+        </div>
+        <label class="switch">
+          <input id="coordToggle" type="checkbox" checked />
+          <span>显示坐标</span>
+        </label>
+      </div>
+
+      <div class="card history-card">
+        <h2 class="card-title">落子记录</h2>
+        <ol id="history" class="history"></ol>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <p>快捷键：<kbd>U</kbd> 悔棋 · <kbd>R</kbd> 重开 · <kbd>空格</kbd> 音效开关</p>
+  </footer>
+</div>
+
+<script src="game.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
